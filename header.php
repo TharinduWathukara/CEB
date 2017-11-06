@@ -1,24 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: tharindu
- * Date: 10/29/17
- * Time: 3:27 AM
- */
-    session_start();
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CEB</title>
-    <link rel="stylesheet" href="other/bootstrap/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="other/cs/indexStyle.css">
-</head>
-<body>
 <nav class="navbar navbar-default" id="navigationbar">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,46 +26,55 @@
                                 <td><input type="text" style="width:300px; margin-top: 8px; margin-left: 30px" id="search_input"></td>
                                 <td><input type="submit" style="width:80px; margin-top: 5px; margin-left: 10px; padding: 3px;" id="search_submit"></td>
                             </tr>
-                        </table></form></li>
+                        </table></form>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php
-                    if(isset($_SESSION['userID'])){
-                        echo '<form action="other/php/logout.inc.php" method="POST">
-							<button type="submit" name="submit" style="width:auto; padding: 14px 20px;">Logout</button>
-						</form>';
-                    }else{
-                        echo'<li>
-                                <button onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto; padding: 14px 20px;" id="login">LOGIN</button>
-            
-                                <div id="id01" class="modal">
-            
-                                    <form class="modal-content animate" id="login_form" action="other/php/login.inc.php" method="post">
-                                        <div class="imgcontainer">
-                                            <span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="close" title="Close Modal">&times;</span>
-                                            <img src="other/image/logo.png" alt="Avatar" class="avatar">
-                                            <h2 style="color: gold; font-weight: bold;font-size: 30px;">CENTRAL ELECTRICITY BOARDL</h2>
-                                        </div>
-            
-                                        <div class="container">
-                                            <label><b>User ID</b></label><br>
-                                            <input type="text" placeholder="User ID" name="userID" id="userID" required><br>
-            
-                                            <label><b>Password</b></label><br>
-                                            <input type="password" placeholder="Password" name="psw" id="psw" required><br>
-            
-                                            <button type="submit" id="submit" name="submit">Login</button><br>
-                                            <input type="checkbox" checked="checked"> Remember me
-                                        </div>
-            
-                                        <div class="container" style="background-color:#f1f1f1">
-                                            <button type="button" onclick="document.getElementById(\'id01\').style.display=\'none\'" class="cancelbtn">Cancel</button>
-                                            <span class="psw">Forgot <a href="#">password?</a></span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>';
-                    }
+                if(isset($_SESSION['userID'])){
+                    echo '<form action="other/php/logout.inc.php" method="POST">
+                        <div class="dropdown">
+                          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:auto; padding: 14px 20px; background: whitesmoke; color: grey; margin: 0; border: none">Name
+                          <span class="caret"></span></button>
+                          <ul class="dropdown-menu" style="width: 100px;">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="home.php">Work Area</a></li>
+                            <li><button type="submit" name="submit" id="nav_logout">Log Out</button></li>
+                          </ul>
+                        </div>
+                </form>';
+                }else{
+                    echo'<li>
+                <button onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto; padding: 14px 20px; background: whitesmoke; color: grey; margin: 0;">LOGIN</button>
+
+                <div id="id01" class="modal">
+
+                    <form class="modal-content animate" id="login_form" action="other/php/login.inc.php" method="post">
+                        <div class="imgcontainer">
+                            <span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="close" title="Close Modal">&times;</span>
+                            <img src="other/image/logo.png" alt="Avatar" class="avatar">
+                            <h2 style="color: gold; font-weight: bold;font-size: 30px;">CENTRAL ELECTRICITY BOARDL</h2>
+                        </div>
+
+                        <div class="container">
+                            <label><b>User ID</b></label><br>
+                            <input type="text" placeholder="User ID" name="userID" id="userID" required><br>
+
+                            <label><b>Password</b></label><br>
+                            <input type="password" placeholder="Password" name="psw" id="psw" required><br>
+
+                            <button type="submit" id="submit" name="submit">Login</button><br>
+                            <input type="checkbox" checked="checked"> Remember me
+                        </div>
+
+                        <div class="container" style="background-color:#f1f1f1">
+                            <button type="button" onclick="document.getElementById(\'id01\').style.display=\'none\'" class="cancelbtn">Cancel</button>
+                            <span class="psw">Forgot <a href="#">password?</a></span>
+                        </div>
+                    </form>
+                </div>
+            </li>';
+                }
                 ?>
             </ul>
         </div><!-- /.navbar-collapse -->
