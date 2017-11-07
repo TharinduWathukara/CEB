@@ -16,10 +16,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active" style="padding-left: 15px"><a href="index.php">HOME <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">ABOUT US</a></li>
-                <li><a href="#">CAREERS</a></li>
-                <li><a href="#">CONTACT US</a></li>
-                <li><a href="#">SITE MAP</a></li>
+                <li><a href="index.php">ABOUT US</a></li>
+                <li><a href="management.php">OUR MANAGEMENT</a></li>
+                <li><a href="contactUs.php">CONTACT US</a></li>
                 <li><form>
                         <table>
                             <tr>
@@ -45,7 +44,7 @@
                 </form>';
                 }else{
                     echo'<li>
-                <button onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto; padding: 14px 20px; background: whitesmoke; color: grey; margin: 0;">LOGIN</button>
+                <button onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto; padding: 14px 20px; background: whitesmoke; color: grey; margin: 0;"><span class="glyphicon glyphicon-log-in"></span> LOGIN</button>
 
                 <div id="id01" class="modal">
 

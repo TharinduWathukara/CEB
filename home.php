@@ -29,7 +29,7 @@ if(!isset($_SESSION["userID"])){header('Location: index.php');}
 include_once 'header.php';
 ?>
 
-<div class="row affix-row" id="nContainer">
+<div class="row affix-row" style="margin-top: 54px">
     <div class="col-sm-3 col-md-2 affix-sidebar">
         <div class="sidebar-nav">
             <div class="navbar navbar-default" role="navigation">
@@ -61,32 +61,43 @@ include_once 'header.php';
                             </div>
                         </li>
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#toggleDemo" data-parent="#sidenav01" class="collapsed">
-                                <span class="glyphicon glyphicon-cloud"></span> Submenu 1 <span class="caret pull-right"></span>
+                            <a href="#" data-toggle="collapse" data-target="#toggleDemo1" data-parent="#sidenav01" class="collapsed">
+                                <span class="glyphicon glyphicon-user"></span> User Management <span class="caret pull-right"></span>
                             </a>
-                            <div class="collapse" id="toggleDemo" style="height: 0px;">
+                            <div class="collapse" id="toggleDemo1" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">Submenu1.1</a></li>
-                                    <li><a href="#">Submenu1.2</a></li>
+                                    <li><a href="#">Add New Employee</a></li>
+                                    <li><a href="#">Edit Employee Details</a></li>
+                                    <li><a href="#">Add new Customer</a></li>
+                                    <li><a href="#">Edit Customer Details</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#toggleDemo2" data-parent="#sidenav01" class="collapsed">
+                                <span class="glyphicon glyphicon-fire"></span> Monitor Energy Consumption<span class="caret pull-right"></span>
+                            </a>
+                            <div class="collapse" id="toggleDemo2" style="height: 0px;">
+                                <ul class="nav nav-list">
+                                    <li><a href="#">Overall Energy Consumption</a></li>
+                                    <li><a href="#">Energy Consumption by Customer</a></li>
                                     <li><a href="#">Submenu1.3</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="active">
-                            <a href="#" data-toggle="collapse" data-target="#toggleDemo2" data-parent="#sidenav01" class="collapsed">
-                                <span class="glyphicon glyphicon-inbox"></span> Submenu 2 <span class="caret pull-right"></span>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#toggleDemo3" data-parent="#sidenav01" class="collapsed">
+                                <span class="glyphicon glyphicon-inbox"></span> Manage Bill Payments<span class="caret pull-right"></span>
                             </a>
-                            <div class="collapse" id="toggleDemo2" style="height: 0px;">
+                            <div class="collapse" id="toggleDemo3" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">Submenu2.1</a></li>
-                                    <li><a href="#">Submenu2.2</a></li>
-                                    <li><a href="#">Submenu2.3</a></li>
+                                    <li><a href="#">View Bill Payments</a></li>
+                                    <li><a href="#">Payments</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Normalmenu</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-calendar"></span> WithBadges <span class="badge pull-right">42</span></a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> PreferencesMenu</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Meter Reading</a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> System Setting</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

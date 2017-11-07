@@ -13,11 +13,12 @@ include 'db.connect.php';
 $userID=$_POST['userID'];
 $psw=$_POST['psw'];
 
-$sql = "select * from employee_credentials where ID='$userID' and password='$psw'";
+
+$sql = "select * from Employee_Credentials where ID='$userID' and password=aes_encrypt('$psw','tharindu')";
 $result = mysqli_query($connection,$sql);
 
 if(!$row=mysqli_fetch_assoc($result)){
-    echo "Your username or password is incorrect!";
+    echo "<script type='text/javascript'> alert('Your username or password is incorrect!');</script>";
 }else{
     $_SESSION['userID']=$row['ID'];
     $_SESSION['access_Level']=$row['access_Level'];

@@ -142,3 +142,20 @@ span.psw {
 #nav_logout:hover{
     background: whitesmoke;
 }
+
+
+/**************navigation bar****************************/
+.navbar-brand{
+    font-size: 30px;
+    padding-right: 40px;
+}
+.small_cap{
+    font-size: 23px;
+}
+#navigationbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+}
+
