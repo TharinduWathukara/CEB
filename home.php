@@ -113,7 +113,7 @@ include_once 'header.php';
 
             <div id="addEmployee" style="margin: 0 auto; width: 58%; border: 2px solid black; padding: 30px; display: none">
                 <div class="form-area">
-                    <form role="form">
+                    <form role="form" action="other/php/addEmployee.php" method="post">
                         <br style="clear:both">
                         <h3 style="margin-bottom: 25px; text-align: center;">ADD NEW EMPLOYEE</h3>
                         <div class="form-group">
@@ -125,11 +125,16 @@ include_once 'header.php';
                         <div class="form-group">
                             <input type="text" class="form-control" name="mobile" placeholder="Mobile Number" required>
                         </div>
-                        <!--<div class="form-group">
-                            <select class="form-control" style="width: 55%;">
+                        <div class="form-group">
+                            <select class="form-control" name="branch" style="width: 55%;">
                                 <option selected>Choose Branch...</option>
+                                <option value="1">Ratnapura</option>
+                                <option value="2">Panadura</option>
+                                <option value="3">Awissawella</option>
+                                <option value="4">Kottawa</option>
+
                             </select>
-                        </div>-->
+                        </div>
                         <div class="row">
                             <div class="form-group" style="padding-left: 16px"><strong>Designation :</strong></div>
                             <div class="form-check form-check-inline col-sm-4">
@@ -139,7 +144,7 @@ include_once 'header.php';
                             </div>
                             <div class="form-check form-check-inline col-sm-4">
                                 <label>
-                                    <input onclick="document.getElementById('form_serviceArea').style.display='none'" class="form-check-input" type="radio" name="position" value="cachier"> Cashier
+                                    <input onclick="document.getElementById('form_serviceArea').style.display='none'" class="form-check-input" type="radio" name="position" value="cashier"> Cashier
                                 </label>
                             </div>
                             <div class="form-check form-check-inline col-sm-4">
@@ -192,11 +197,15 @@ include_once 'header.php';
                         <div class="form-group">
                             <input type="text" class="form-control" name="mobile" placeholder="Mobile Number" required>
                         </div>
-                        <!--<div class="form-group">
-                            <select class="form-control" style="width: 55%;">
+                        <div class="form-group">
+                            <select class="form-control" name="branch" style="width: 55%;">
                                 <option selected>Choose Branch...</option>
+                                <option value="1">Ratnapura</option>
+                                <option value="2">Panadura</option>
+                                <option value="3">Awissawella</option>
+                                <option value="4">Kottawa</option>
                             </select>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <select class="form-control" style="width: 55%;">
                                 <option selected>Choose Customer Type...</option>

@@ -52,7 +52,7 @@
                         <div class="imgcontainer">
                             <span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="close" title="Close Modal">&times;</span>
                             <img src="other/image/logo.png" alt="Avatar" class="avatar">
-                            <h2 style="color: gold; font-weight: bold;font-size: 30px;">CENTRAL ELECTRICITY BOARDL</h2>
+                            <h2 style="color: gold; font-weight: bold;font-size: 30px;">CENTRAL ELECTRICITY BOARD</h2>
                         </div>
 
                         <div class="container">
