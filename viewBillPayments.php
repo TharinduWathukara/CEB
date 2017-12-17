@@ -2,12 +2,65 @@
 /**
  * Created by PhpStorm.
  * User: tharindu
- * Date: 10/29/17
- * Time: 3:27 AM
+ * Date: 12/17/17
+ * Time: 10:12 AM
  */
+
 session_start();
 
 if(!isset($_SESSION["userID"])){header('Location: index.php');}
+
+require 'other/php/db.connect.php';
+$viewBillPayments='';
+
+if(isset($_POST['viewBillPayments'])){
+    $searching = $_POST['NIC'];
+    $searching = preg_replace("#[^0-9a-z]#","",$searching);
+
+    $sql = "select * from Customer where NIC like '%$searching%'";
+    $result = mysqli_query($connection,$sql);
+    $count2=mysqli_num_rows($result);
+    if($count2==0){
+        echo "there is no such NIC";
+    }else{
+        $row3=mysqli_fetch_array($result);
+        $cusID=$row3['ID'];
+        $cusName=$row3['name'];
+
+        $sql3= "select * from Payment where CustomerID='$cusID' order by PaymentID desc";
+        $result3=mysqli_query($connection,$sql3);
+        $count = mysqli_num_rows($result3);
+        if($count==0){
+            $editEmployeeOutput = "There are no Search Results!";
+        }else{
+            while($row=mysqli_fetch_array($result3)){
+                $PaymentID = $row['PaymentID'];
+                $PaidAmount = $row['PaidAmount'];
+                $Date=$row['Date'];
+
+                $viewBillPayments .= "
+                        <div class=\"row\">
+                            <div class=\"col-sm-2\">
+                                ".$PaymentID."
+                            </div>
+                            <div class=\"col-sm-3\">
+                                ".$cusName."
+                            </div>
+                            <div class=\"col-sm-4\">
+                                ".$PaidAmount."
+                            </div>
+                            <div class=\"col-sm-3\">
+                                ".$Date."
+                            </div>
+                        </div>";
+            }
+        }
+
+    }
+
+
+//    echo "<script type='text/javascript'>$('#editEmployeeDetails').show()</script>";
+}
 
 ?>
 
@@ -180,7 +233,45 @@ include_once 'header.php';
     </div>
     <div class="col-sm-9 col-md-10 affix-content">
         <div class="container">
-            Welcome to CEB Management System
+
+            <!--            view Energy Consumption-->
+
+            <div id="viewBillPayments" class="formElements" style="margin: 0 auto; width: 58%; border: 2px solid black; padding: 30px;">
+                <div class="form-area">
+                    <form role="form" action="viewBillPayments.php" method="post">
+                        <br style="clear:both">
+                        <h3 style="margin-bottom: 25px; text-align: center;">VIEW BILL PAYMENTS</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="NIC" placeholder="NIC" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" id="submit" name="viewBillPayments" class="btn btn-primary" style="width: 90%">Seacrch</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" style="width: 90%" onclick="document.getElementById('editEmployeeDetails').style.display='none'" class="btn btn-primary ">Cancel</button>
+                            </div>
+                        </div><br><hr>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <strong>Payment ID</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <strong>Customer Name</strong>
+                            </div>
+                            <div class="col-sm-4">
+                                <strong>Paid Amount</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <strong>Date</strong>
+                            </div>
+                        </div>
+                        <?php
+                        print("$viewBillPayments");
+                        ?>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

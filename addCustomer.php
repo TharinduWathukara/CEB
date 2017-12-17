@@ -13,6 +13,7 @@ require 'other/php/db.connect.php';
 if(isset($_POST['addCustomerSubmit'])){
     $name = $_POST['name'];
     $address = $_POST['address'];
+    $NIC = $_POST['NIC'];
     $email = $_POST['email'];
     $accountNumber = $_POST['accountNumber'];
     $mobile = $_POST['mobile'];
@@ -23,12 +24,12 @@ if(isset($_POST['addCustomerSubmit'])){
 
     if($password==$cpassword){
 
-        $sql1="insert into Customer VALUE ('','$branch','$name','$address','$accountNumber','$email','$mobile')";
+        $sql1="insert into Customer VALUE ('','$branch','$name','$address','$accountNumber','$email','$mobile','$NIC')";
 
         if (mysqli_query($connection, $sql1)) {
             echo "New record added to the customer table";
 
-            $sql2="select ID from Customer where name='$name' and email='$email' and contact_No='$mobile' and account_Number";
+            $sql2="select ID from Customer where name='$name' and email='$email'and NIC='$NIC'";
             $result2 = mysqli_query($connection,$sql2);
 
             if($row2=mysqli_fetch_assoc($result2)){
@@ -46,22 +47,22 @@ if(isset($_POST['addCustomerSubmit'])){
                         } else {
                             echo "Error: " . $sql4 . "<br>" . mysqli_error($connection);
                         }
-                    }if ($customerType=="governmentOrganization"){
+                    }elseif ($customerType=="governmentOrganization"){
                         $sql5="insert into Govenment_Organization VALUE ('$id')";
                         if (mysqli_query($connection, $sql5)) {
                             echo "<script type='text/javascript'> alert('New record created successfully');</script>";
                         } else {
                             echo "Error: " . $sql5 . "<br>" . mysqli_error($connection);
                         }
-                    }if ($customerType=="enterprises"){
-                        $sql6="insert into Enterpricer VALUE ('$id')";
+                    }elseif ($customerType=="enterprises"){
+                        $sql6="insert into Emterpricer VALUE ('$id')";
                         if (mysqli_query($connection, $sql6)) {
                             echo "<script type='text/javascript'> alert('New record created successfully');</script>";
                         } else {
                             echo "Error: " . $sql6 . "<br>" . mysqli_error($connection);
                         }
-                    }if ($customerType=="religiousEstablishment") {
-                        $sql7 = "insert into Relligious_Establishment VALUE ('$id')";
+                    }elseif ($customerType=="religiousEstablishment") {
+                        $sql7="insert into Relligious_Establishment VALUE ('$id')";
                         if (mysqli_query($connection, $sql7)) {
                             echo "<script type='text/javascript'> alert('New record created successfully');</script>";
                         } else {
@@ -166,7 +167,7 @@ include_once 'header.php';
                             </a>
                             <div class="collapse" id="toggleDemo3" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">View Bill Payments</a></li>
+                                    <li><a href="viewBillPayments.php">View Bill Payments</a></li>
                                     <li><a href="#">Payments</a></li>
                                 </ul>
                             </div>
@@ -193,7 +194,7 @@ include_once 'header.php';
                             </a>
                             <div class="collapse" id="toggleDemo3" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">View Bill Payments</a></li>
+                                    <li><a href="viewBillPayments.php">View Bill Payments</a></li>
                                     <li><a href="#">Payments</a></li>
                                 </ul>
                             </div>
@@ -266,6 +267,9 @@ include_once 'header.php';
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" name="address" placeholder="Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="NIC" placeholder="NIC" required>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" name="email" placeholder="Email" required>

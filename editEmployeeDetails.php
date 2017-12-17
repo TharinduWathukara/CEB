@@ -34,7 +34,7 @@ if(isset($_POST['editEmployeeSearch'])){
 
             $branchName = $row2['name'];
 
-            $editEmployeeOutput = "
+            $editEmployeeOutput .= "
                         <div class=\"row\">
                             <div class=\"col-sm-1\">
                                 ".$ID."
@@ -138,7 +138,7 @@ include_once 'header.php';
                             </a>
                             <div class="collapse" id="toggleDemo3" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">View Bill Payments</a></li>
+                                    <li><a href="viewBillPayments.php">View Bill Payments</a></li>
                                     <li><a href="#">Payments</a></li>
                                 </ul>
                             </div>
@@ -165,7 +165,7 @@ include_once 'header.php';
                             </a>
                             <div class="collapse" id="toggleDemo3" style="height: 0px;">
                                 <ul class="nav nav-list">
-                                    <li><a href="#">View Bill Payments</a></li>
+                                    <li><a href="viewBillPayments.php">View Bill Payments</a></li>
                                     <li><a href="#">Payments</a></li>
                                 </ul>
                             </div>
