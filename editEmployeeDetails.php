@@ -2,12 +2,58 @@
 /**
  * Created by PhpStorm.
  * User: tharindu
- * Date: 10/29/17
- * Time: 3:27 AM
+ * Date: 12/17/17
+ * Time: 9:03 AM
  */
+
 session_start();
 
 if(!isset($_SESSION["userID"])){header('Location: index.php');}
+require 'other/php/db.connect.php';
+$editEmployeeOutput='';
+
+if(isset($_POST['editEmployeeSearch'])){
+    $searching = $_POST['name'];
+    $searching = preg_replace("#[^0-9a-z]#","",$searching);
+
+    $sql = "select * from Employee where name like '%$searching%'";
+    $result = mysqli_query($connection,$sql);
+    $count = mysqli_num_rows($result);
+    if($count==0){
+        $editEmployeeOutput = "There are no Search Results!";
+    }else{
+        while($row=mysqli_fetch_array($result)){
+            $ID = $row['ID'];
+            $name = $row['name'];
+            $email = $row['email'];
+            $branchID=$row['branch_ID'];
+
+            $sql2="select name from Branch where ID='$branchID'";
+            $result2=mysqli_query($connection,$sql2);
+            $row2=mysqli_fetch_assoc($result2);
+
+            $branchName = $row2['name'];
+
+            $editEmployeeOutput = "
+                        <div class=\"row\">
+                            <div class=\"col-sm-1\">
+                                ".$ID."
+                            </div>
+                            <div class=\"col-sm-3\">
+                                ".$name."
+                            </div>
+                            <div class=\"col-sm-5\">
+                                ".$email."
+                            </div>
+                            <div class=\"col-sm-3\">
+                                ".$branchName."
+                            </div>
+                        </div>";
+        }
+    }
+//    echo "<script type='text/javascript'>$('#editEmployeeDetails').show()</script>";
+}
+
 
 ?>
 
@@ -180,7 +226,45 @@ include_once 'header.php';
     </div>
     <div class="col-sm-9 col-md-10 affix-content">
         <div class="container">
-            Welcome to CEB Management System
+
+            <!--            edit employee details-->
+
+            <div id="editEmployeeDetails" class="formElements" style="margin: 0 auto; width: 58%; border: 2px solid black; padding: 30px;">
+                <div class="form-area">
+                    <form role="form" action="editEmployeeDetails.php" method="post">
+                        <br style="clear:both">
+                        <h3 style="margin-bottom: 25px; text-align: center;">VIEW EMPLOYEE DETAILS</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" id="submit" name="editEmployeeSearch" class="btn btn-primary" style="width: 90%">Search Employee</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" style="width: 90%" onclick="document.getElementById('editEmployeeDetails').style.display='none'" class="btn btn-primary ">Cancel</button>
+                            </div>
+                        </div><br><hr>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <strong>ID</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <strong>Name</strong>
+                            </div>
+                            <div class="col-sm-5">
+                                <strong>Email</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <strong>Branch</strong>
+                            </div>
+                        </div>
+                        <?php
+                        print("$editEmployeeOutput");
+                        ?>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

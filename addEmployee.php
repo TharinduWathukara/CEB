@@ -8,6 +8,71 @@
 session_start();
 
 if(!isset($_SESSION["userID"])){header('Location: index.php');}
+require 'other/php/db.connect.php';
+
+if(isset($_POST['addEmployeeSubmit'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $branch = $_POST['branch'];
+    $position = $_POST['position'];
+    $password = $_POST['password'];
+    $cpassword = $_POST['cpassword'];
+    $serviceArea='';
+
+    if($password==$cpassword){
+
+        $sql1="insert into Employee VALUE ('','$branch','$name','$email','$mobile')";
+
+        if (mysqli_query($connection, $sql1)) {
+            $sql2="select ID from Employee where name='$name' and email='$email' and contact_No='$mobile'";
+            $result2 = mysqli_query($connection,$sql2);
+
+            if($row2=mysqli_fetch_assoc($result2)){
+                $id=$row2['ID'];
+
+                $sql3="insert into Employee_Credentials VALUE ('$id',aes_encrypt('$password','tharindu'),'$position')";
+                if (mysqli_query($connection, $sql3)) {
+                    if($position=='manager'){
+                        $sql4="insert into Manager VALUE ('$id')";
+                        if (mysqli_query($connection, $sql4)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql4 . "<br>" . mysqli_error($connection);
+                        }
+                    }if ($position=="cashier"){
+                        $sql5="insert into Cashier VALUE ('$id')";
+                        if (mysqli_query($connection, $sql5)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql5 . "<br>" . mysqli_error($connection);
+                        }
+                    }if ($position=="meterReader"){
+                        $serviceArea= $_POST['serviceArea'];
+                        $sql6="insert into Meter_Reader VALUE ('$id','$serviceArea')";
+                        if (mysqli_query($connection, $sql6)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql6 . "<br>" . mysqli_error($connection);
+                        }
+                    }
+                } else {
+                    echo "added to the employee credentials";
+                    echo "Error: " . $sql3 . "<br>" . mysqli_error($connection);
+                }
+            }
+            else{
+                echo "id not get";
+            }
+        }else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+        }
+    }else{
+        echo "<script type='text/javascript'> alert('Check password again');</script>";
+    }
+}
+
+
 
 ?>
 
@@ -180,7 +245,72 @@ include_once 'header.php';
     </div>
     <div class="col-sm-9 col-md-10 affix-content">
         <div class="container">
-            Welcome to CEB Management System
+
+            <!--            add new employee-->
+
+            <div id="addEmployee" class="formElements" style="margin: 0 auto; width: 58%; border: 2px solid black; padding: 30px;">
+                <div class="form-area">
+                    <form role="form" action="addEmployee.php" method="post">
+                        <br style="clear:both">
+                        <h3 style="margin-bottom: 25px; text-align: center;">ADD NEW EMPLOYEE</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="branch" style="width: 55%;">
+                                <option selected>Choose Branch...</option>
+                                <option value="1">Ratnapura</option>
+                                <option value="2">Panadura</option>
+                                <option value="3">Awissawella</option>
+                                <option value="4">Kottawa</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="form-group" style="padding-left: 16px"><strong>Designation :</strong></div>
+                            <div class="form-check form-check-inline col-sm-4">
+                                <label>
+                                    <input onclick="document.getElementById('form_serviceArea').style.display='none'" class="form-check-input" type="radio" name="position" value="manager"> Manager
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline col-sm-4">
+                                <label>
+                                    <input onclick="document.getElementById('form_serviceArea').style.display='none'" class="form-check-input" type="radio" name="position" value="cashier"> Cashier
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline col-sm-4">
+                                <label>
+                                    <input onclick="document.getElementById('form_serviceArea').style.display='block'" class="form-check-input" type="radio" name="position" value="meterReader"> Meter Reader
+                                </label>
+                            </div>
+                        </div><br>
+                        <div class="form-group" id="form_serviceArea" style="display:none;">
+                            <input type="text" class="form-control" name="serviceArea" placeholder="Service Area">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Temporary Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" id="submit" name="addEmployeeSubmit" class="btn btn-primary" style="width: 90%">Add</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" style="width: 90%" onclick="document.getElementById('addEmployee').style.display='none'" class="btn btn-primary ">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

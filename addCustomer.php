@@ -8,6 +8,80 @@
 session_start();
 
 if(!isset($_SESSION["userID"])){header('Location: index.php');}
+require 'other/php/db.connect.php';
+
+if(isset($_POST['addCustomerSubmit'])){
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $accountNumber = $_POST['accountNumber'];
+    $mobile = $_POST['mobile'];
+    $branch = $_POST['branch'];
+    $customerType = $_POST['customerType'];
+    $password = $_POST['password'];
+    $cpassword = $_POST['cpassword'];
+
+    if($password==$cpassword){
+
+        $sql1="insert into Customer VALUE ('','$branch','$name','$address','$accountNumber','$email','$mobile')";
+
+        if (mysqli_query($connection, $sql1)) {
+            echo "New record added to the customer table";
+
+            $sql2="select ID from Customer where name='$name' and email='$email' and contact_No='$mobile' and account_Number";
+            $result2 = mysqli_query($connection,$sql2);
+
+            if($row2=mysqli_fetch_assoc($result2)){
+                $id=$row2['ID'];
+                echo "get the id";
+
+                $sql3="insert into Customer_Credentials VALUE ('$id',aes_encrypt('$password','tharindu'))";
+                if (mysqli_query($connection, $sql3)) {
+                    echo "New record added to the customer credentials";
+
+                    if($customerType=='house'){
+                        $sql4="insert into House VALUE ('$id')";
+                        if (mysqli_query($connection, $sql4)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql4 . "<br>" . mysqli_error($connection);
+                        }
+                    }if ($customerType=="governmentOrganization"){
+                        $sql5="insert into Govenment_Organization VALUE ('$id')";
+                        if (mysqli_query($connection, $sql5)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql5 . "<br>" . mysqli_error($connection);
+                        }
+                    }if ($customerType=="enterprises"){
+                        $sql6="insert into Enterpricer VALUE ('$id')";
+                        if (mysqli_query($connection, $sql6)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql6 . "<br>" . mysqli_error($connection);
+                        }
+                    }if ($customerType=="religiousEstablishment") {
+                        $sql7 = "insert into Relligious_Establishment VALUE ('$id')";
+                        if (mysqli_query($connection, $sql7)) {
+                            echo "<script type='text/javascript'> alert('New record created successfully');</script>";
+                        } else {
+                            echo "Error: " . $sql7 . "<br>" . mysqli_error($connection);
+                        }
+                    }
+                } else {
+                    echo "Error: " . $sql3 . "<br>" . mysqli_error($connection);
+                }
+            }else{
+                echo "Error: " . $sql3 . "<br>" . mysqli_error($connection);
+            }
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+        }
+    }else{
+        echo 'check password again';
+    }
+}
+
 
 ?>
 
@@ -180,7 +254,64 @@ include_once 'header.php';
     </div>
     <div class="col-sm-9 col-md-10 affix-content">
         <div class="container">
-            Welcome to CEB Management System
+            <!--            add new customer-->
+
+            <div id="addCustomer" class="formElements" style="margin: 0 auto; width: 58%; border: 2px solid black; padding: 30px;">
+                <div class="form-area">
+                    <form role="form" action="addCustomer.php" method="post">
+                        <br style="clear:both">
+                        <h3 style="margin-bottom: 25px; text-align: center;">ADD NEW CUSTOMER</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="address" placeholder="Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="accountNumber" placeholder="Account Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="mobile" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="branch" style="width: 55%;">
+                                <option selected>Choose Branch...</option>
+                                <option value="1">Ratnapura</option>
+                                <option value="2">Panadura</option>
+                                <option value="3">Awissawella</option>
+                                <option value="4">Kottawa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="customerType" style="width: 55%;">
+                                <option selected>Choose Customer Type...</option>
+                                <option value="house">House</option>
+                                <option value="governmentOrganization">Government Organization</option>
+                                <option value="enterprises">Enterprises</option>
+                                <option value="religiousEstablishment">Religious Establishment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Temporary Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" id="submit" name="addCustomerSubmit" class="btn btn-primary" style="width: 90%">Add</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" style="width: 90%" onclick="document.getElementById('addCustomer').style.display='none'" class="btn btn-primary ">Cancel</button>
+                            </div>
+                        </div><br>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

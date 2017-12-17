@@ -23,7 +23,7 @@
                         <table>
                             <tr>
                                 <td><input type="text" style="width:300px; margin-top: 8px; margin-left: 30px" id="search_input"></td>
-                                <td><input type="submit" style="width:80px; margin-top: 5px; margin-left: 10px; padding: 3px;" id="search_submit"></td>
+                                <td><button type="submit" style="width:80px; margin-top: 8px; margin-left: 10px; padding: 5px; background: lightgray" id="search_submit">Search</button></td>
                             </tr>
                         </table></form>
                 </li>
